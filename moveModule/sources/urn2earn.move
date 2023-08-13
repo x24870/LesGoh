@@ -177,8 +177,9 @@ module owner::urn_to_earn {
         token_id
     }
 
-    public entry fun reincarnate(sign: &signer, urn_prop_ver: u64) {
-        let creator = @owner;
+    public entry fun reincarnate(sign: &signer, urn_prop_ver: u64) acquires UrnToEarnConfig {
+        let resource = get_resource_account();
+        let creator = signer::address_of(&resource);
         let collection = string::utf8(COLLECTION_NAME);
         let urn_token_name = string::utf8(urn::get_urn_token_name());
 
