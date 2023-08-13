@@ -1,3 +1,5 @@
+![](images/banner.jpg)
+
 # About this project
 This is a cross-chain NFT project between EVM and Move ecosystem
 
@@ -14,6 +16,16 @@ So, with this project, users not only get to experience a unique NFT minting pro
 
 # Tech stack
 This project is built using the Move language, and the bridge between EVM chains is powered by Hyperlane. Unfortunately, Hyperlane currently does not support Aptos. As a workaround, we have implemented a centralized relayer between Aptos and Goerli. However, with Hyperlane, we can easily bridge our NFT to any chain that they support.
+
+# Screenshots
+|![](images/sreenshot4.png)|![](images/sreenshot2.png)|
+-|-
+|![](images/sreenshot3.png)|![](images/sreenshot1.png)|
+|![](images/hyperlane.png)|![](images/opensea.png)|
+
+# Appendix
+### Hyperlane history
+https://explorer.hyperlane.xyz/message/0xa19e4972d1532bd4cf00a24d77f8b277fe32d774827e5b02e0d0d405421adcef
 
 ### Here is the frontend code repo:
 https://github.com/sanyu1225/urnToEarn-frontend.git
