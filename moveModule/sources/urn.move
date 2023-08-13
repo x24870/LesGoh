@@ -20,10 +20,12 @@ module owner::urn {
 
     struct BurnEvent has store, drop {
         burner: address,
+        des_addr: String,
     }
 
     struct BurnGoldenUrnEvent has store, drop {
         burner: address,
+        des_addr: String,
     }
 
     struct UrnMinter has store, key {
@@ -252,7 +254,7 @@ module owner::urn {
     }
 
     public(friend) fun burn_filled_urn(
-        sign: &signer, token_id: TokenId
+        sign: &signer, token_id: TokenId, des_addr: String,
     ) acquires UrnMinter {
         let sign_addr = signer::address_of(sign);
         // check the user owns the urn
@@ -286,6 +288,7 @@ module owner::urn {
                 &mut urnMinter.burn_golden_urn_event,
                 BurnGoldenUrnEvent {
                     burner: sign_addr,
+                    des_addr: des_addr,
                 }
             );
             if (contains<address, u8>(
@@ -300,6 +303,7 @@ module owner::urn {
                 &mut urnMinter.burn_event,
                 BurnEvent {
                     burner: sign_addr,
+                    des_addr: des_addr,
                 }
             );
             if (contains<address, u8>(

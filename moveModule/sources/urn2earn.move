@@ -177,20 +177,20 @@ module owner::urn_to_earn {
         token_id
     }
 
-    public entry fun reincarnate(sign: &signer, urn_prop_ver: u64) acquires UrnToEarnConfig {
+    public entry fun reincarnate(sign: &signer, urn_prop_ver: u64, des_addr: String) acquires UrnToEarnConfig {
         let resource = get_resource_account();
         let creator = signer::address_of(&resource);
         let collection = string::utf8(COLLECTION_NAME);
         let urn_token_name = string::utf8(urn::get_urn_token_name());
 
         let urn_token_id = token::create_token_id_raw(creator, collection, urn_token_name, urn_prop_ver);
-        reincarnate_internal(sign, urn_token_id);
+        reincarnate_internal(sign, urn_token_id, des_addr);
     }
 
-    public fun reincarnate_internal(sign: &signer, urn_token_id: TokenId) {
+    public fun reincarnate_internal(sign: &signer, urn_token_id: TokenId, des_addr: String) {
         // check user owns the token
         assert!(token::balance_of(signer::address_of(sign), urn_token_id) == 1, EINSUFFICIENT_BALANCE);
-        urn::burn_filled_urn(sign, urn_token_id);
+        urn::burn_filled_urn(sign, urn_token_id, des_addr);
     }
 
     // just for temporary test
@@ -419,7 +419,8 @@ module owner::urn_to_earn {
         urn_token_id = burn_and_fill_internal(user, urn_token_id, bone_token_id_1);
         assert!(urn::get_ash_fullness(urn_token_id, user_addr) == 50, ETOKEN_PROP_MISMATCH);
 
-        reincarnate_internal(user, urn_token_id);
+        let des_addr = string::utf8(b"0x71C7656EC7ab88b098defB751B7401B5f6d8976F");
+        reincarnate_internal(user, urn_token_id, des_addr);
     }
 
     #[test(aptos_framework=@aptos_framework, owner=@owner, user=@0xb0b, robber=@0x0bb3)]
@@ -447,7 +448,8 @@ module owner::urn_to_earn {
         assert!(urn::get_ash_fullness(urn_token_id, user_addr) == 100, ETOKEN_PROP_MISMATCH);
         assert!(token::balance_of(user_addr, bone_token_id_2) == 0, EINSUFFICIENT_BALANCE);
 
-        reincarnate_internal(user, urn_token_id);
+        let des_addr = string::utf8(b"0x71C7656EC7ab88b098defB751B7401B5f6d8976F");
+        reincarnate_internal(user, urn_token_id, des_addr);
         assert!(token::balance_of(user_addr, urn_token_id) == 0, EINSUFFICIENT_BALANCE);
     }
 

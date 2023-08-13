@@ -20,7 +20,7 @@ const TokenName = "Aptos Token"
 const GasPrice = uint64(100)
 const DefaultMaxGasAmount = uint64(500000)
 
-const OwnerAddr = "d640a1d7f3e7236a7aa95fa6e9a69531ad3c88ee9601b8a4afabe73d25b48508"
+const OwnerAddr = "da0cd74d3815ed8e319a97c1e8ff9e162aac4ac6d7a1bbc6ef614f7892d11ede"
 const UserAddr = "8630f8fe18d3d841aa9e5d349c011d3330c81fd71db252024622055bbdcccb44"
 const UserSeed = "165b006e6718b20a8275f52189419655bcab018eda25eb2002b6077a05261646"
 
