@@ -1,0 +1,27 @@
+version: "3.4"
+
+services:
+  db:
+    image: postgres:14.4-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=test
+      - POSTGRES_DB=test
+    restart: always
+    healthcheck:
+      test: pg_isready -U test -d test
+      interval: 10s
+      timeout: 3s
+      retries: 5
+  
+  demo_app:
+    image: demo_app:latest
+    ports: 
+      - "8080:8080"
+    env_file:
+      - docker/config/.env
+    depends_on:
+      - db
+    restart: always
