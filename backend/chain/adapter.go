@@ -49,8 +49,8 @@ const (
 
 	endpoint = "https://ethereum-goerli.publicnode.com" // goerli
 
-	pk              = "3f65e43afa4731c92c9570728ef74836ab2fb40ce03adb69ad3e214498feb7a0"            // for test only
-	mnemonic        = "tag couch antenna aerobic dignity boost equal unfold peanut humble seek ten" // for test only
+	pk              = "" // for test only
+	mnemonic        = "" // for test only
 	nftCreator      = "0xda0cd74d3815ed8e319a97c1e8ff9e162aac4ac6d7a1bbc6ef614f7892d11ede"
 	nftAddress      = ""
 	nftHandleStruct = "0xda0cd74d3815ed8e319a97c1e8ff9e162aac4ac6d7a1bbc6ef614f7892d11ede::urn::UrnMinter"
@@ -161,7 +161,7 @@ type Adapter struct {
 
 func (a *Adapter) sync() {
 	go func() {
-		ticker := time.NewTicker(15 * time.Second)
+		ticker := time.NewTicker(30 * time.Second)
 		for {
 			select {
 			case _ = <-ticker.C:
@@ -186,9 +186,12 @@ func (a *Adapter) findTx() error {
 		return err
 	}
 	for _, event := range events {
+		if event.Version <= 635093791 {
+			continue
+		}
 		version := "version_" + strconv.FormatUint(uint64(event.Version), 10)
 		destAddr := event.Data["des_addr"].(string)
-		logrus.WithField("version", version).Info("find event")
+		// logrus.WithField("version", version).Info("find event")
 
 		if err := a.mintByHyperlane(ctx, version, destAddr); err != nil {
 			logrus.WithField("err", err).Error("failed to mint")

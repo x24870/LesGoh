@@ -32,7 +32,7 @@ const (
 	// mainnet
 	// endpoint = ""
 
-	pk = "3f65e43afa4731c92c9570728ef74836ab2fb40ce03adb69ad3e214498feb7a0"
+	pk = ""
 )
 
 var (
